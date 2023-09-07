@@ -41,6 +41,24 @@ export const hamIngredientes = async(req,res)=>{
 
     }
 }
+export const iClasico = async(req,res)=>{
+    console.log(req.rateLimit);
+    try {
+        const data = await ingredientesQuerys.iclasico();
+        res.status(200).send({
+            message:"Nice!",
+            data
+        })
+        
+    } catch (error) {
+        res.status(500).send({
+            message:"No se pudo obtener todos los ingredientes menores de 400",
+            error:error.message
+        })
+        console.log(error);
+
+    }
+}
 
 
 //Get by Id

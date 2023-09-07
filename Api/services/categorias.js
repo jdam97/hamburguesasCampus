@@ -10,3 +10,16 @@ export const categorias = async ()=>{
     return data;
 };
 
+//17.Encontrar todas las categorías que contienen la palabra "gourmet" en su descripción
+export const categoriasgourmet = async ()=>{
+    const db = await connectDB();
+    const collection = db.collection('categorias');
+    const data = await collection.aggregate([
+        {
+            $match:{"categorias":"gourmet" }
+        }
+        
+    ]).toArray();
+    console.log(data);
+    return data;
+};

@@ -9,6 +9,8 @@ const IngredientesApp = Router();
 
 IngredientesApp.get("/",ingredientesConsulta.getIngredientes); //punto 1
 IngredientesApp.get("/ingrediente",ingredientesConsulta.hamIngredientes); //punto 9
+IngredientesApp.get("/clasicos",ingredientesConsulta.iClasico); //punto 9
+
 
 
 export default IngredientesApp;

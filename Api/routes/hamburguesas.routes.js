@@ -8,12 +8,7 @@ const HamburguesasApp = Router();
 // ContratosApp.use(passportHelper.authenticate('bearer', {session: false}));
 
 HamburguesasApp.get("/", hamburguesasConsultas.hamburguesasV);
+HamburguesasApp.get("/menorIgual", hamburguesasConsultas.menorIgual);
 
 
-
-
-// ContratosApp.get("/:ContratosID", ContratosConsultas.getContratosById);
-// ContratosApp.post("/",validarContratos,ContratosConsultas.createContratos);
-// ContratosApp.delete("/:_id",ContratosConsultas.deleteContratos);
-// ContratosApp.put("/:_id", ContratosConsultas.updateContratos)
 export default HamburguesasApp;

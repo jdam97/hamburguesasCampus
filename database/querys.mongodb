@@ -35,6 +35,22 @@ db.ingredientes.insertMany([
         "precio":200,
         "descripcion":"pan",
         "idHamburguesa":1
+    },
+    {
+        "id":3,
+        "nombre":"pan azteca",
+        "stock": 300,
+        "precio":200,
+        "descripcion":"clasico",
+        "idHamburguesa":1
+    },
+    {
+        "id":4,
+        "nombre":"pan raro",
+        "stock": 300,
+        "precio":200,
+        "descripcion":"clasico",
+        "idHamburguesa":1
     }
 ])
 
@@ -257,11 +273,19 @@ db.ingredientes.aggregate([
     }
 ])
 
-//11.Encontrar el ingrediente más caro
+//14.Encontrar todos los ingredientes que tienen una descripción que contiene la palabra "clásico"
 use('filtroMongo_JonathanDavidAlvarez');
 db.ingredientes.aggregate([
     {
-        
+        $match:{"descripcion":"clasico"}
+    }
+])
+
+//Listar las hamburguesas en orden ascendente según su precio
+use('filtroMongo_JonathanDavidAlvarez');
+db.hamburguesas.aggregate([
+    {
+        $match:{precio:{$lte:9} }
     }
 ])
 

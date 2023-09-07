@@ -36,3 +36,20 @@ export const hIngrediente = async ()=>{
 };
 
 
+//14.Encontrar todos los ingredientes que tienen una descripción que contiene la palabra "clásico"
+export const iclasico = async ()=>{
+    const db = await connectDB();
+    const collection = db.collection('ingredientes');
+    const data =  await collection.aggregate([ 
+        {
+            $match:{"descripcion":"clasico"}
+        }
+    ]).toArray();
+    console.log(data);
+    return data;
+};
+
+//Encontrar todos los ingredientes cuyo precio sea entre $2 y $5
+
+
+
