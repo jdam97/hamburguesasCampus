@@ -1,11 +1,10 @@
 import { check } from "express-validator";
 
-const validarUsuarios = [
+const validarChefs = [
     check('id').isNumeric().withMessage('id es requerido y debe ser de tipo number'),
-    check('cedula').isString().withMessage('cedcedulaula es requerido y es de tipo string'),
     check('nombre').isString().withMessage('nombre es requerido y es de tipo string'),
-    check('apellido').isString().withMessage('apellido es requerido y es de tipo string'),
-    check('email').isEmail().withMessage('email es requerido y es de tipo email'),
+    check('especializacion').isString().withMessage('especializacion es requerido y es de tipo string'),
+    check('especialidad').isString().withMessage('especialidad es requerido y es de tipo string'),
 ]
 
-export default validarUsuarios;
+export default validarChefs;
