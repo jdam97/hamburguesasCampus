@@ -98,42 +98,56 @@ En resumen, los Chefs se enfrentan a un problema crítico de gestión de ingredi
 
    
 
-3. Encontrar todos los chefs que se especializan en "Carnes"
+3. GET: Encontrar todos los chefs que se especializan en "Carnes"
 
    ```
    http://127.16.16.16:4014/chefs
    ```
-5. Encontrar todas las hamburguesas preparadas por "ChefB".
+5. GET: Encontrar todas las hamburguesas preparadas por "ChefB".
 
    ```
    http://127.16.16.16:4014/chefs/hamburguesa
    ```
 
-6. Encontrar el nombre y la descripción de todas las categorías.
+6. GET: Encontrar el nombre y la descripción de todas las categorías.
 
     ```
    http://127.16.16.16:4014/categorias
    ```
-9. Encontrar todas las hamburguesas que contienen "Pan integral" como ingrediente.
+8. POST: Agregar un nuevo ingrediente a la hamburguesa "Clásica".
+
+    ```
+    http://127.16.16.16:4014/ingredientes
+
+    {  
+        "id":1,
+        "nombre":"lechuga",
+        "stock": 400,
+        "precio":100,
+        "descripcion":"batavia",
+        "idHamburguesa":1
+    }
+   ```
+9. GET: Encontrar todas las hamburguesas que contienen "Pan integral" como ingrediente.
 
     ```
    http://127.16.16.16:4014/ingredientes/ingrediente 
    ```
    
-14. Encontrar todos los ingredientes que tienen una descripción que contiene la palabra "clásico".
+14. GET: Encontrar todos los ingredientes que tienen una descripción que contiene la palabra "clásico".
 
      ```
   http://127.16.16.16:4014/ingredientes/clasicos 
    ```
   
-15. Listar las hamburguesas cuyo precio es menor o igual a $9.
+15. GET: Listar las hamburguesas cuyo precio es menor o igual a $9.
 
      ```
   http://127.16.16.16:4014/hamburguesas/menorIgual 
    ```
   
 
-17. Encontrar todas las categorías que contienen la palabra "gourmet" en su descripción
+17. GET: Encontrar todas las categorías que contienen la palabra "gourmet" en su descripción
 
     ```
   http://127.16.16.16:4014/categorias/gourmet
