@@ -1,0 +1,273 @@
+use('filtroMongo_JonathanDavidAlvarez');
+db.createCollection('ingredientes',{
+    validator:{
+        $jsonSchema:{
+            bsonType:"object",
+            required:["id","nombre","stock","precio","descripcion","idHamburguesa"],
+            properties:{
+                id:{bsonType:"int",description:"id debe ser de tipo entero y es requerido"},
+                nombre:{bsonType:"string", description:"nombre es requerido y de tipo string"},
+                stock:{bsonType:"int", description:"stock debe ser de tipo entero y es requerido"},
+                precio:{bsonType:"int", description:"precio debe ser de tipo entero y es requerido"},
+                descripcion:{bsonType:"string", description:"descripcion debe ser de tipo string y es requerido"},
+                idHamburguesa:{bsonType:"int", description:"idHamburguesa debe ser de tipo int y es requerido"}
+            }
+        }
+    }
+})
+
+
+
+use('filtroMongo_JonathanDavidAlvarez');
+db.ingredientes.insertMany([
+    {
+        "id":1,
+        "nombre":"lechuga",
+        "stock": 400,
+        "precio":100,
+        "descripcion":"batavia",
+        "idHamburguesa":1
+    },
+    {
+        "id":2,
+        "nombre":"pan integral",
+        "stock": 300,
+        "precio":200,
+        "descripcion":"pan",
+        "idHamburguesa":1
+    }
+])
+
+use('filtroMongo_JonathanDavidAlvarez');
+db.createCollection('hamburguesas',{
+    validator:{
+        $jsonSchema:{
+            bsonType:"object",
+            required:["id","nombre","precio","idCategorias","idChefs"],
+            properties:{
+                id:{bsonType:"int",description:"id debe ser de tipo entero y es requerido"},
+                nombre:{bsonType:"string", description:"nombre es requerido y de tipo string"},
+                precio:{bsonType:"int", description:"precio debe ser de tipo entero y es requerido"},
+                idCategorias:{bsonType:"int", description:"idCategorias debe ser de tipo entero y es requerido"},
+                idChefs:{bsonType:"int", description:"idChefs debe ser de tipo entero y es requerido"},
+            }
+        }
+    }
+})
+
+use('filtroMongo_JonathanDavidAlvarez');
+db.hamburguesas.insertMany([
+    {
+        "id":1,
+        "nombre":"clasica",
+        "precio":9,
+        "idCategorias":1,
+        "idChefs":1
+    },
+    {
+        "id":2,
+        "nombre":"doble",
+        "precio":15,
+        "idCategorias":2,
+        "idChefs":2
+    }
+])
+
+use('filtroMongo_JonathanDavidAlvarez');
+db.createCollection('chefs',{
+    validator:{
+        $jsonSchema:{
+            bsonType:"object",
+            required:["id","nombre","especializacion","especialidad"],
+            properties:{
+                id:{bsonType:"int",description:"id debe ser de tipo entero y es requerido"},
+                nombre:{bsonType:"string", description:"nombre es requerido y de tipo string"},
+                especializacion:{bsonType:"string", description:"especializacion debe ser de tipo string y es requerido"},
+                especialidad:{bsonType:"string", description:"especialidad debe ser de tipo string y es requerido"},
+            }
+        }
+    }
+})
+
+use('filtroMongo_JonathanDavidAlvarez');
+db.chefs.insertMany([
+    {
+        "id":1,
+        "nombre":"CheftA",
+        "especializacion":"hamburguesas",
+        "especialidad":"cocina"
+    },
+    {
+        "id":2,
+        "nombre":"CheftB",
+        "especializacion":"todo",
+        "especialidad":"cocina"
+    },
+    {
+        "id":3,
+        "nombre":"CheftC",
+        "especializacion":"cocina",
+        "especialidad":"carnes"
+    }
+])
+
+use('filtroMongo_JonathanDavidAlvarez');
+db.createCollection('categorias',{
+    validator:{
+        $jsonSchema:{
+            bsonType:"object",
+            required:["id","nombre","descripcion"],
+            properties:{
+                id:{bsonType:"int",description:"id debe ser de tipo entero y es requerido"},
+                nombre:{bsonType:"string", description:"nombre es requerido y de tipo string"},
+                descripcion:{bsonType:"string", description:"descripcion debe ser de tipo string y es requerido"},
+            }
+        }
+    }
+})
+
+
+use('filtroMongo_JonathanDavidAlvarez');
+db.categorias.insertMany([
+    {
+        "id":1,
+        "nombre":"clasica",
+        "descripcion":"gourmet",
+
+    },
+    {
+        "id":2,
+        "nombre":"vegetariana",
+        "descripcion":"gourmet",
+
+    }
+])
+
+
+
+
+
+//Punto 1
+use('filtroMongo_JonathanDavidAlvarez');
+db.ingredientes.aggregate([
+    {
+        $match:{stock:{$lt:400} }
+    }
+])
+
+//Punto 2
+use('filtroMongo_JonathanDavidAlvarez');
+db.hamburguesas.aggregate([
+    {
+        $lookup: {
+          from: "categorias",
+          localField: "idCategorias",
+          foreignField: "id",
+          as: "categorias_Hamburguesas"
+        }
+    },
+    {
+        $match:{"categorias_Hamburguesas.nombre":"vegetariana"}
+    },
+    {
+        $unwind: "$categorias_Hamburguesas"
+    },
+    {
+        $project: {
+          _id:0,
+        }
+    }
+])
+
+//Punto 3
+
+use('filtroMongo_JonathanDavidAlvarez');
+db.chefs.aggregate([
+    {
+        $match:{"especialidad":"carnes"}
+    },
+    {
+        $project:{
+            _id:0
+        }
+    }
+])
+
+//punto4 PENDIENTE
+use('filtroMongo_JonathanDavidAlvarez');
+db.ingredientes.aggregate([
+    {
+        $match:{"especialidad":"carnes"}
+    },
+    {
+        $project:{
+            _id:0
+        }
+    }
+])
+
+//5. Encontrar todas las hamburguesas preparadas por "ChefB" 
+use('filtroMongo_JonathanDavidAlvarez');
+db.hamburguesas.aggregate([
+    {
+        $lookup: {
+          from: "chefs",
+          localField: "idChefs",
+          foreignField: "id",
+          as: "hamburguesas_chef"
+        }
+    },
+    {
+        $match:{"hamburguesas_chef.nombre":"CheftB"}
+    },
+    {
+        $unwind:"$hamburguesas_chef"},
+    {
+        $project:{
+            _id:0,
+            "hamburguesas_chef._id":0
+        }
+    }
+])
+
+//6. Encontrar el nombre y la descripción de todas las categorías 
+
+use('filtroMongo_JonathanDavidAlvarez');
+db.categorias.find({})
+
+//7. Eliminar todos los ingredientes que tengan un stock de 0 : PENDIENTE
+use('filtroMongo_JonathanDavidAlvarez');
+db.ingredientes.deleteMany({
+    $match:{stock:{$eq:0} }
+})
+
+//9.Encontrar todas las hamburguesas que contienen "Pan integral" como ingrediente
+use('filtroMongo_JonathanDavidAlvarez');
+db.ingredientes.aggregate([
+    {
+        $lookup: {
+          from: "hamburguesas",
+          localField: "idHamburguesa",
+          foreignField: "id",
+          as: "hIngredientes"
+        }
+    },
+    {
+        $match:{"nombre":"pan integral"}
+    }
+])
+
+//11.Encontrar el ingrediente más caro
+use('filtroMongo_JonathanDavidAlvarez');
+db.ingredientes.aggregate([
+    {
+        
+    }
+])
+
+
+
+
+
+
+

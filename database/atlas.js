@@ -6,7 +6,7 @@ const DB = JSON.parse(process.env.ATLAS_CONNECTION);
 
 export async function connectDB(){
     try{
-        const URI = `mongodb+srv://${DB.user}:${DB.password}@cluster0.lfged0r.mongodb.net/${DB.database}`
+        const URI = `mongodb+srv://latinoamericacampus233:Campus*2023@cluster0.l3dtumk.mongodb.net/filtroMongo_JonathanDavidAlvarez`
         const options = {
             useNewUrlParser: true,
             useUnifiedTopology: true,
