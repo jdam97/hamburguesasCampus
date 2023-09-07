@@ -21,6 +21,28 @@ export const getIngredientes = async(req,res)=>{
 
     }
 }
+//8
+export const addIngredientes = async(req,res)=>{  
+    const errors = validationResult(req); 
+    if (!errors.isEmpty()) return res.status(422).send(errors);
+    console.log(req.rateLimit);
+    try {
+        const data = await ingredientesQuerys.addIngrediente(req.body);
+        res.status(200).send({
+            message:"Nice!",
+            data
+        })
+        
+    } catch (error) {
+        res.status(500).send({
+            message:"No se pudo obtener todos los ingredientes menores de 400",
+            error:error.message
+        })
+        console.log(error);
+
+    }
+}
+
 
 //9.Encontrar todas las hamburguesas que contienen "Pan integral" como ingrediente
 export const hamIngredientes = async(req,res)=>{

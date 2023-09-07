@@ -14,6 +14,16 @@ export const minIngredientes = async ()=>{
     return data;
 };
 
+//7.
+
+//8. Agregar un nuevo ingrediente a la hamburguesa "Clásica"
+export const addIngrediente = async(ingrediente)=>{
+    let db = await connectDB();
+    let collection = db.collection('ingredientes');
+    let data = await collection.insertOne(ingrediente)
+    return data 
+}
+
 //9.Encontrar todas las hamburguesas que contienen "Pan integral" como ingrediente
 export const hIngrediente = async ()=>{
     const db = await connectDB();
