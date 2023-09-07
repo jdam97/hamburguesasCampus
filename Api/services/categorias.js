@@ -16,7 +16,7 @@ export const categoriasgourmet = async ()=>{
     const collection = db.collection('categorias');
     const data = await collection.aggregate([
         {
-            $match:{"categorias":"gourmet" }
+            $match:{"descripcion":"gourmet" }
         }
         
     ]).toArray();

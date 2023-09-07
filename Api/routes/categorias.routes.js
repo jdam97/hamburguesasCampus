@@ -8,6 +8,6 @@ const categoriasApp = Router();
 // AutosApp.use(passportHelper.authenticate('bearer', {session: false}));
 
 categoriasApp.get("/",categoriasConsulta.allCategorias);
-categoriasApp.get("/",categoriasConsulta.categoriasgourmet);
+categoriasApp.get("/gourmet",categoriasConsulta.categoriasgourmet);
 
 export default categoriasApp;
