@@ -15,6 +15,18 @@ export const minIngredientes = async ()=>{
 };
 
 //7.
+export const eliminarStock = async ()=>{
+    const db = await connectDB();
+    const collection = db.collection('ingredientes');
+    const data =  await collection.aggregate([ 
+        {
+            $match:{stock:{$eq:0} }
+        }
+    ]).toArray();
+    const eliminated = await collection.deleteOne(data)
+    console.log(data);
+    return eliminated;
+};
 
 //8. Agregar un nuevo ingrediente a la hamburguesa "Clásica"
 export const addIngrediente = async(ingrediente)=>{
@@ -58,8 +70,5 @@ export const iclasico = async ()=>{
     console.log(data);
     return data;
 };
-
-//Encontrar todos los ingredientes cuyo precio sea entre $2 y $5
-
 
 
